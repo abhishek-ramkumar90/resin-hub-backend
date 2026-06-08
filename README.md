@@ -11,16 +11,29 @@ mvn spring-boot:run
 
 ## Run with Docker Compose (recommended)
 
-Starts both the API and MailHog in one command:
+Starts the API container (SMTP is read from `application.properties`):
 
 ```bash
 docker compose up --build
 ```
 
+### Cloud-friendly Compose profile
+
+Use `docker-compose.cloud.yml` when deploying to cloud VMs/hosts (no fixed `container_name`, no SMTP host overrides):
+
+```bash
+docker compose -f docker-compose.cloud.yml up --build -d
+```
+
+Stop it:
+
+```bash
+docker compose -f docker-compose.cloud.yml down
+```
+
 | Service | URL |
 |---------|-----|
 | API | `http://localhost:8081/coatingbazar` |
-| MailHog Web UI | `http://localhost:8025` |
 
 Stop everything:
 
@@ -36,8 +49,6 @@ docker build -t coating-bazaar-api .
 
 # Run (point to an external MailHog or SMTP host via env vars)
 docker run -p 8081:8081 \
-  -e SPRING_MAIL_HOST=mailhog \
-  -e SPRING_MAIL_PORT=1025 \
   coating-bazaar-api
 ```
 
@@ -47,10 +58,17 @@ Set the following in your cloud platform's environment config:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `SPRING_MAIL_HOST` | SMTP host | `localhost` |
-| `SPRING_MAIL_PORT` | SMTP port | `1025` |
+| `SPRING_MAIL_HOST` | SMTP host | From `application.properties` |
+| `SPRING_MAIL_PORT` | SMTP port | From `application.properties` |
 | `APP_MAIL_FROM` | Sender address | `no-reply@coatingbazaar.com` |
 | `SERVER_PORT` | HTTP port | `8081` |
+
+For cloud compose profile, you can also set:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `IMAGE_NAME` | Output image name/tag in compose | `coating-bazaar-api:latest` |
+| `APP_PORT` | Host port mapped to container `8081` | `8081` |
 
 ## API Endpoints
 
@@ -64,12 +82,7 @@ Base URL: `http://localhost:8081/coatingbazar`
 | GET | `/api/products/by-category` | Products grouped by category |
 | GET | `/api/products/category/{id}` | Products for a category |
 | GET | `/api/prices` | All categories with their products |
-| POST | `/api/email/send` | Send test email through MailHog SMTP |
-
-## MailHog
-- SMTP: `localhost:1025`
-- Web UI: `http://localhost:8025`
-- App uses these defaults from `application.properties`.
+| POST | `/api/email/send` | Send order email through configured SMTP |
 
 ## Example
 ```
