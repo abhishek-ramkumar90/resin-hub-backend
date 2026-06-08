@@ -27,7 +27,7 @@ public class EmailController {
         if (hasMissingRequiredFields(request)) {
             return ResponseEntity.badRequest().body(Map.of(
                 "status", "error",
-                "message", "Fields 'subject', 'companyname', 'quantity', 'pincode', 'contactnumber', 'category', 'product', 'industry', 'colour', 'chemistry', 'finish', and 'gloss' are required"
+                "message", "Fields 'subject', 'companyname', 'quantity', 'pincode', 'contactnumber', 'category', 'product', 'industry', 'colour', 'finish' are required"
             ));
         }
 
@@ -48,8 +48,6 @@ public class EmailController {
             || isBlank(request.product())
             || isBlank(request.industry())
             || isBlank(request.colour())
-            || isBlank(request.chemistry())
-            || isBlank(request.finish())
             || isBlank(request.gloss());
     }
 
