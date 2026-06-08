@@ -4,10 +4,53 @@
 - Java 21+
 - Maven 3.8+
 
-## Run
+## Run locally (Maven)
 ```bash
 mvn spring-boot:run
 ```
+
+## Run with Docker Compose (recommended)
+
+Starts both the API and MailHog in one command:
+
+```bash
+docker compose up --build
+```
+
+| Service | URL |
+|---------|-----|
+| API | `http://localhost:8081/coatingbazar` |
+| MailHog Web UI | `http://localhost:8025` |
+
+Stop everything:
+
+```bash
+docker compose down
+```
+
+### Build & run the API image standalone
+
+```bash
+# Build
+docker build -t coating-bazaar-api .
+
+# Run (point to an external MailHog or SMTP host via env vars)
+docker run -p 8081:8081 \
+  -e SPRING_MAIL_HOST=mailhog \
+  -e SPRING_MAIL_PORT=1025 \
+  coating-bazaar-api
+```
+
+### Cloud deployment notes
+All configuration can be overridden via environment variables (Spring's relaxed binding maps `SPRING_MAIL_HOST` → `spring.mail.host` etc.).  
+Set the following in your cloud platform's environment config:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `SPRING_MAIL_HOST` | SMTP host | `localhost` |
+| `SPRING_MAIL_PORT` | SMTP port | `1025` |
+| `APP_MAIL_FROM` | Sender address | `no-reply@coatingbazaar.com` |
+| `SERVER_PORT` | HTTP port | `8081` |
 
 ## API Endpoints
 

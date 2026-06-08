@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+
+  # ── MailHog (local SMTP + Web UI) ───────────────────────────────────────────
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI  →  http://localhost:8025
+    restart: unless-stopped
+
+  # ── CoatingBazaar Spring Boot API ──────────────────────────────────────────
+  coating-bazaar-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: coating-bazaar-api
+    ports:
+      - "8081:8081"
+    environment:
+      # Override the SMTP host so the app reaches MailHog inside the network
+      SPRING_MAIL_HOST: mailhog
+      SPRING_MAIL_PORT: 1025
+      # Override any other property with SPRING_* env vars if needed
+      SERVER_PORT: 8081
+      SERVER_SERVLET_CONTEXT_PATH: /coatingbazar
+    depends_on:
+      - mailhog
+    restart: unless-stopped
+

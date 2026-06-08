@@ -39,8 +39,7 @@ public class EmailController {
     }
 
     private boolean hasMissingRequiredFields(EmailRequest request) {
-        return isBlank(request.to())
-            || isBlank(request.subject())
+        return isBlank(request.subject())
             || isBlank(request.companyname())
             || isBlank(request.quantity())
             || isBlank(request.pincode())
