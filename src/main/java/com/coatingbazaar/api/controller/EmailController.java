@@ -45,9 +45,8 @@ public class EmailController {
             || isBlank(request.pincode())
             || isBlank(request.contactnumber())
             || isBlank(request.product())
-            || isBlank(request.industry())
-            || isBlank(request.colour())
-            || isBlank(request.gloss());
+            || isBlank(request.colour());
+
     }
 
     private boolean isBlank(String value) {
