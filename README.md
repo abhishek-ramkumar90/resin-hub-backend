@@ -11,29 +11,16 @@ mvn spring-boot:run
 
 ## Run with Docker Compose (recommended)
 
-Starts the API container (SMTP is read from `application.properties`):
+Starts both the API and MailHog in one command:
 
 ```bash
 docker compose up --build
 ```
 
-### Cloud-friendly Compose profile
-
-Use `docker-compose.cloud.yml` when deploying to cloud VMs/hosts (no fixed `container_name`, no SMTP host overrides):
-
-```bash
-docker compose -f docker-compose.cloud.yml up --build -d
-```
-
-Stop it:
-
-```bash
-docker compose -f docker-compose.cloud.yml down
-```
-
 | Service | URL |
 |---------|-----|
 | API | `http://localhost:8081/coatingbazar` |
+| MailHog Web UI | `http://localhost:8025` |
 
 Stop everything:
 
