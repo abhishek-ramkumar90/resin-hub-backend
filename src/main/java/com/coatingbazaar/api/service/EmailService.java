@@ -127,6 +127,7 @@ public class EmailService {
                           <tr><td style="border:1px solid #d1d5db; padding:8px; vertical-align:top;">Company Name</td><td style="border:1px solid #d1d5db; padding:8px; word-wrap: break-word; white-space: pre-wrap; overflow-wrap: break-word;">%s</td></tr>
                           <tr><td style="border:1px solid #d1d5db; padding:8px; vertical-align:top;">Sector</td><td style="border:1px solid #d1d5db; padding:8px; word-wrap: break-word; white-space: pre-wrap; overflow-wrap: break-word;">%s</td></tr>
                           <tr><td style="border:1px solid #d1d5db; padding:8px; vertical-align:top;">Contact Number</td><td style="border:1px solid #d1d5db; padding:8px; word-wrap: break-word; white-space: pre-wrap; overflow-wrap: break-word;">%s</td></tr>
+                          <tr><td style="border:1px solid #d1d5db; padding:8px; vertical-align:top;">Contact Person</td><td style="border:1px solid #d1d5db; padding:8px; word-wrap: break-word; white-space: pre-wrap; overflow-wrap: break-word;">%s</td></tr>
                           <tr><td style="border:1px solid #d1d5db; padding:8px; vertical-align:top;">Surface</td><td style="border:1px solid #d1d5db; padding:8px; word-wrap: break-word; white-space: pre-wrap; overflow-wrap: break-word;">%s</td></tr>
                           <tr><td style="border:1px solid #d1d5db; padding:8px; vertical-align:top;">Environment</td><td style="border:1px solid #d1d5db; padding:8px; word-wrap: break-word; white-space: pre-wrap; overflow-wrap: break-word;">%s</td></tr>
                           <tr><td style="border:1px solid #d1d5db; padding:8px; vertical-align:top;">Requirement</td><td style="border:1px solid #d1d5db; padding:8px; word-wrap: break-word; white-space: pre-wrap; overflow-wrap: break-word; line-height: 1.5;">%s</td></tr>
@@ -146,6 +147,7 @@ public class EmailService {
             escapeHtml(request.companyname()),
             escapeHtml(request.sector()),
             escapeHtml(request.contactnumber()),
+            escapeHtml(request.contactperson()),
             escapeHtml(request.surface()),
             escapeHtml(request.environment()),
             escapeHtml(request.requirement()),

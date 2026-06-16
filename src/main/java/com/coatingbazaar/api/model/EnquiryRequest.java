@@ -5,6 +5,7 @@ public record EnquiryRequest(
 	String companyname,
 	String sector,
 	String contactnumber,
+    String contactperson,
 	String surface,
 	String environment,
 	String requirement,

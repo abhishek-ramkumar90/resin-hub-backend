@@ -77,6 +77,7 @@ class EmailServiceTest {
             "ABC Manufacturing",
             "Automotive",
             "9876543210",
+            "Abhishek",
             "Aluminum",
             "Indoor",
             "High durability coating for automotive parts with specific requirements",
