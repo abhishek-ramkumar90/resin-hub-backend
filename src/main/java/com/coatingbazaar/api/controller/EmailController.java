@@ -1,6 +1,7 @@
 package com.coatingbazaar.api.controller;
 
 import com.coatingbazaar.api.model.EmailRequest;
+import com.coatingbazaar.api.model.EnquiryRequest;
 import com.coatingbazaar.api.service.EmailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +28,7 @@ public class EmailController {
         if (hasMissingRequiredFields(request)) {
             return ResponseEntity.badRequest().body(Map.of(
                 "status", "error",
-                "message", "Fields 'subject', 'companyname', 'quantity', 'pincode', 'contactnumber', 'product', 'industry', 'colour', 'finish' are required"
+                "message", "Fields   'contactnumber', 'email',  are required"
             ));
         }
 
@@ -38,19 +39,35 @@ public class EmailController {
         ));
     }
 
-    private boolean hasMissingRequiredFields(EmailRequest request) {
-        return isBlank(request.subject())
-            || isBlank(request.companyname())
-            || isBlank(request.quantity())
-            || isBlank(request.pincode())
-            || isBlank(request.contactnumber())
-            || isBlank(request.product())
-            || isBlank(request.colour());
+    @PostMapping("/enquire")
+    public ResponseEntity<Map<String, String>> sendEnquiry(@RequestBody EnquiryRequest request) {
+        if (hasMissingRequiredFieldsForEnquiry(request)) {
+            return ResponseEntity.badRequest().body(Map.of(
+                "status", "error",
+                "message", "Fields 'companyname', 'contactnumber', 'email', 'requirement' are required"
+            ));
+        }
 
+        emailService.sendEnquiryEmail(request);
+        return ResponseEntity.ok(Map.of(
+            "status", "sent",
+            "message", "Enquiry email queued to MailHog"
+        ));
+    }
+
+    private boolean hasMissingRequiredFields(EmailRequest request) {
+        return isBlank(request.email())
+            || isBlank(request.companyname())
+            || isBlank(request.contactnumber());
+    }
+
+    private boolean hasMissingRequiredFieldsForEnquiry(EnquiryRequest request) {
+        return isBlank(request.email())
+            || isBlank(request.companyname()) || isBlank(request.requirement())
+            || isBlank(request.contactnumber());
     }
 
     private boolean isBlank(String value) {
         return value == null || value.trim().isEmpty();
     }
 }
-

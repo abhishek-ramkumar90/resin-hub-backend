@@ -12,7 +12,8 @@ public record EmailRequest(
 	String colour,
 	String chemistry,
 	String finish,
-	String gloss
+	String gloss,
+    String email
 ) {
 }
 
